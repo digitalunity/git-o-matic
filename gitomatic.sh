@@ -133,10 +133,10 @@ do
 			read comment
 			if [ ${ssh_dev[$choice]} = 'localhost' ]; then
 				echo
-				cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '$comment'; git push
+				cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m "${comment}"; git push
 			else
 				echo
-				ssh ${ssh_dev[$choice]} "cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '$comment'; git push"
+				ssh ${ssh_dev[$choice]} "cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '${comment}'; git push"
 			fi
 			if [ ${ssh_live[$choice]} = 'localhost' ]; then
 				echo
