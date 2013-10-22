@@ -1,4 +1,7 @@
 #!/bin/bash
+##chris@digitalunity.co.uk
+##irc: Freenode... digitalunity_uk
+##
 #get all the settings
 read_settings(){
 	counter=0;
