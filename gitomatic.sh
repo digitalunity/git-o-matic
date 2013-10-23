@@ -1,7 +1,11 @@
 #!/bin/bash
-##chris@digitalunity.co.uk
-##irc: Freenode... digitalunity_uk
-##
+###
+# Hosted:	https://github.com/digitalunity/git-o-matic
+# Description:	Script to aid automatic interaction of git and make more time for bacon.
+# Author:	Chris Harrison <chris@digitalunity.co.uk>
+# Version:	1.1
+# Date: 	23 Oct 2013
+###
 #get all the settings
 read_settings(){
 	counter=0;
@@ -86,7 +90,7 @@ do
 	echo
 	echo "		1. Push Changes"
 	echo
-	echo "		2. Pull"
+	echo "		2. Pull to live"
 	echo
 	echo "		3. Push then Pull"
 	echo
@@ -125,7 +129,13 @@ do
 			;;
 		2) 
 			echo "Pull"
-			ssh ${ssh_live[$choice]} "cd ${dir_live[$choice]}; git show --oneline -s; git pull; git show --oneline -s"
+			if [ ${ssh_live[$choice]} = 'localhost' ]; then
+				#no need to ssh
+				echo "working locally"
+				cd ${dir_live[$choice]}; git show --oneline -s; git pull; git show --oneline -s
+			else
+				ssh ${ssh_live[$choice]} "cd ${dir_live[$choice]}; git show --oneline -s; git pull; git show --oneline -s"
+			fi
 			read -p "Completed. Press [Enter] key to Continue" readEnterKey
 			;;
 		3) 
@@ -136,10 +146,10 @@ do
 			read comment
 			if [ ${ssh_dev[$choice]} = 'localhost' ]; then
 				echo
-				cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m "${comment}"; git push
+				cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '$comment'; git push
 			else
 				echo
-				ssh ${ssh_dev[$choice]} "cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '${comment}'; git push"
+				ssh ${ssh_dev[$choice]} "cd ${dir_dev[$choice]}; git show --oneline -s; git add *; git commit -m '$comment'; git push"
 			fi
 			if [ ${ssh_live[$choice]} = 'localhost' ]; then
 				echo
